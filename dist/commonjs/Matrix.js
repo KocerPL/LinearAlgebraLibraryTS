@@ -828,7 +828,7 @@ class SMatrix3 {
     * @returns {SMatrix3} Translated matrix
     */
     translate(pos) {
-        return SMatrix3.Custom(1, 0, pos.x, 0, 1, pos.y, 0, 0, 1);
+        return this.multMat(SMatrix3.Custom(1, 0, pos.x, 0, 1, pos.y, 0, 0, 1));
     }
     toString() {
         let txt = "=========\n";

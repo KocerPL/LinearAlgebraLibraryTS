@@ -3,7 +3,9 @@
   "types": "./dist/commonjs/main.d.ts",
   "name": "linear-algebra-library",
   "version": "0.0.13",
-  "files": ["./dist/commonjs/*"],
+  "files": [
+    "./dist/commonjs/*"
+  ],
   "author": {
     "email": "plkocer@gmail.com",
     "name": "Kocer",

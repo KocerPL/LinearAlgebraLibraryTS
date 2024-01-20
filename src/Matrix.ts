@@ -919,11 +919,11 @@ export class SMatrix3 implements SMatrix
      */
      translate(pos:Vector2):SMatrix3
      {
-         return SMatrix3.Custom(
+         return this.multMat(SMatrix3.Custom(
              1,0,pos.x,
              0,1,pos.y,
              0,0,1
-         )
+         ));
      }
     toString():string
     {
