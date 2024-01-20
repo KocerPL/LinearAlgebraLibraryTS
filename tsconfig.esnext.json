@@ -5,9 +5,9 @@
       "noImplicitAny": true,
       "removeComments": false,
       "preserveConstEnums": true,
-    
       "sourceMap": true,
-      "outDir": "./dist"
+      "outDir": "./dist/esnext/",
+      "declaration": true
     },
     "include": ["./src/*"]
   }

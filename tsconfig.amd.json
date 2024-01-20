@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+      "target": "ESNext",
+      "module": "AMD",
+      "lib": ["es5", "es6","ESNext", "dom"],
+      "noImplicitAny": true,
+      "removeComments": false,
+      "preserveConstEnums": true,
+      "outFile": "./dist/AMD/build.js",
+      "sourceMap": true,
+      "outDir": "./dist/AMD/"
+    },
+    "include": ["./src/*"]
+  }
