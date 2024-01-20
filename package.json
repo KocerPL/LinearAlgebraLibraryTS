@@ -1,8 +1,9 @@
 {
-  "main": "./dist/esnext/*.js",
-  "types": "./dist/esnext/*.d.ts",
+  "main": "./dist/commonjs/main.js",
+  "types": "./dist/commonjs/main.d.ts",
   "name": "linear-algebra-library",
-  "version": "0.0.1",
+  "version": "0.0.13",
+  "files": ["./dist/commonjs/*"],
   "author": {
     "email": "plkocer@gmail.com",
     "name": "Kocer",
@@ -13,6 +14,6 @@
     "typescript": "^5.3.3"
   },
   "scripts": {
-    "build": "rm ./dist/esnext/* && tsc -p tsconfig.esnext.json"
+    "build": "rm ./dist/esnext/* && tsc -p tsconfig.commonjs.json"
   }
 }

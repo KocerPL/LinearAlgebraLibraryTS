@@ -1,15 +1,13 @@
 {
     "compilerOptions": {
       "target": "ESNext",
-      "module": "AMD",
-      "lib": ["es5", "es6","ESNext", "dom"],
+      "module": "CommonJS",
       "noImplicitAny": true,
       "removeComments": false,
       "preserveConstEnums": true,
-      "outFile": "./dist/AMD/build.js",
       "sourceMap": true,
-      "outDir": "./dist/AMD/"
+      "outDir": "./dist/commonjs/",
+      "declaration": true
     },
-    "exclude": ["./src/main.ts"],
     "include": ["./src/*"]
   }
