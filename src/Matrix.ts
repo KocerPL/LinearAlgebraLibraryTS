@@ -906,11 +906,11 @@ export class SMatrix3 implements SMatrix
      */
     scale(scaler:Vector2):SMatrix3
     {
-        return SMatrix3.Custom(
+        return this.multMat(SMatrix3.Custom(
             scaler.x,0,0,
             0,scaler.y,0,
             0,0,1
-        )
+        ));
     }
      /**
      * Translates this matrix and returns result

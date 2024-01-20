@@ -1568,7 +1568,7 @@ define("Matrix", ["require", "exports", "Vector"], function (require, exports, V
        * @returns {SMatrix3} Rotated matrix
        */
         scale(scaler) {
-            return SMatrix3.Custom(scaler.x, 0, 0, 0, scaler.y, 0, 0, 0, 1);
+            return this.multMat(SMatrix3.Custom(scaler.x, 0, 0, 0, scaler.y, 0, 0, 0, 1));
         }
         /**
         * Translates this matrix and returns result
