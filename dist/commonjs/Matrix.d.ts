@@ -588,9 +588,9 @@ export declare class SMatrix4 implements SMatrix {
     translate(pos: Vector3 | Vector4): SMatrix4;
     /**
      * Scales this matrix
-     * @param {Vector3|Vector4} pos Scale to scale in all axis
+     * @param {Vector3|Vector4} scale Scale to scale in all axis
      */
-    scale(pos: Vector3 | Vector4): SMatrix4;
+    scale(scale: Vector3 | Vector4): SMatrix4;
     /**
     * Multiplies new Rotate matrix with this and stores result in this
     * @param {Vector3|Vector4} angles Angles to rotate by

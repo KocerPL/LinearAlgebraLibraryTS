@@ -1195,7 +1195,7 @@ export class SMatrix4 implements SMatrix
      */
      toArray():Array<number>
      {
-        return [this.a,this.b,this.c,this.d,this.e,this.f,this.g,this.h,this.i,this.k,this.l,this.m,this.n,this.o,this.p];
+        return [this.a,this.b,this.c,this.d,this.e,this.f,this.g,this.h,this.i,this.j,this.k,this.l,this.m,this.n,this.o,this.p];
      }
       /**
      * Converts matrix to Array
@@ -1365,11 +1365,11 @@ export class SMatrix4 implements SMatrix
       }
       /**
        * Scales this matrix
-       * @param {Vector3|Vector4} pos Scale to scale in all axis 
+       * @param {Vector3|Vector4} scale Scale to scale in all axis 
        */
-      scale(pos:Vector3|Vector4)
+      scale(scale:Vector3|Vector4)
       {
-        return this.multMat(SMatrix4.Scale(pos));
+        return this.multMat(SMatrix4.Scale(scale));
       }
      /**
      * Multiplies new Rotate matrix with this and stores result in this
@@ -1454,14 +1454,14 @@ export class SMatrix4 implements SMatrix
     */
    static PerspectiveProjection(aspect:number,fov:number,near:number,far:number):SMatrix4
    {
-    let plane = (far/(near*far));
+    let plane = (far/(far-near));
     let offset = -plane*near;
-    let f =1/Math.tan(fov)
+    let f =1/Math.tan(fov/2)
     return SMatrix4.Custom(
         f*aspect,0,0,0,
         0,f,0,0,
-        0,0,plane,offset,
-        0,0,1,0
+        0,0,plane,1,
+        0,0,offset,0
     )
    }
    /**
@@ -1526,7 +1526,7 @@ export class SMatrix4 implements SMatrix
     let sinY = Math.sin(angles.y);
     let sinZ = Math.sin(angles.z);
     return SMatrix4.Custom(
-        cosZ*cosY,(cosZ*sinY*sinX)-(sinZ*sinX),(cosZ*sinY*cosX)+(sinZ*sinX),0,
+        cosZ*cosY,(cosZ*sinY*sinX)-(sinZ*cosX),(cosZ*sinY*cosX)+(sinZ*sinX),0,
         sinZ*cosY,(sinZ*sinY*sinX) +(cosZ*cosX),(sinZ*sinY*cosX)-(cosZ*sinX),0,
         -sinY,cosY*sinX,cosY*cosX,0,
         0,0,0,1
@@ -1540,10 +1540,10 @@ export class SMatrix4 implements SMatrix
    static Translate(pos:Vector3|Vector4):SMatrix4
    {
     return SMatrix4.Custom(
-        1,0,0,pos.x,
-        0,1,0,pos.y,
-        0,0,1,pos.z,
-        0,0,0,1
+        1,0,0,0,
+        0,1,0,0,
+        0,0,1,0,
+        pos.x,pos.y,pos.z,1
     )
    }
    /**

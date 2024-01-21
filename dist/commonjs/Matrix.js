@@ -1055,7 +1055,7 @@ class SMatrix4 {
    * @returns {Array<number>} Array
    */
     toArray() {
-        return [this.a, this.b, this.c, this.d, this.e, this.f, this.g, this.h, this.i, this.k, this.l, this.m, this.n, this.o, this.p];
+        return [this.a, this.b, this.c, this.d, this.e, this.f, this.g, this.h, this.i, this.j, this.k, this.l, this.m, this.n, this.o, this.p];
     }
     /**
    * Converts matrix to Array
@@ -1204,10 +1204,10 @@ class SMatrix4 {
     }
     /**
      * Scales this matrix
-     * @param {Vector3|Vector4} pos Scale to scale in all axis
+     * @param {Vector3|Vector4} scale Scale to scale in all axis
      */
-    scale(pos) {
-        return this.multMat(SMatrix4.Scale(pos));
+    scale(scale) {
+        return this.multMat(SMatrix4.Scale(scale));
     }
     /**
     * Multiplies new Rotate matrix with this and stores result in this
@@ -1281,10 +1281,10 @@ class SMatrix4 {
      * @param far Far plane
      */
     static PerspectiveProjection(aspect, fov, near, far) {
-        let plane = (far / (near * far));
+        let plane = (far / (far - near));
         let offset = -plane * near;
-        let f = 1 / Math.tan(fov);
-        return SMatrix4.Custom(f * aspect, 0, 0, 0, 0, f, 0, 0, 0, 0, plane, offset, 0, 0, 1, 0);
+        let f = 1 / Math.tan(fov / 2);
+        return SMatrix4.Custom(f * aspect, 0, 0, 0, 0, f, 0, 0, 0, 0, plane, 1, 0, 0, offset, 0);
     }
     /**
      * Changes the roll, or rotates in x
@@ -1328,7 +1328,7 @@ class SMatrix4 {
         let sinX = Math.sin(angles.x);
         let sinY = Math.sin(angles.y);
         let sinZ = Math.sin(angles.z);
-        return SMatrix4.Custom(cosZ * cosY, (cosZ * sinY * sinX) - (sinZ * sinX), (cosZ * sinY * cosX) + (sinZ * sinX), 0, sinZ * cosY, (sinZ * sinY * sinX) + (cosZ * cosX), (sinZ * sinY * cosX) - (cosZ * sinX), 0, -sinY, cosY * sinX, cosY * cosX, 0, 0, 0, 0, 1);
+        return SMatrix4.Custom(cosZ * cosY, (cosZ * sinY * sinX) - (sinZ * cosX), (cosZ * sinY * cosX) + (sinZ * sinX), 0, sinZ * cosY, (sinZ * sinY * sinX) + (cosZ * cosX), (sinZ * sinY * cosX) - (cosZ * sinX), 0, -sinY, cosY * sinX, cosY * cosX, 0, 0, 0, 0, 1);
     }
     /**
      * Translates Matrix by Vector
@@ -1336,7 +1336,7 @@ class SMatrix4 {
      * @returns {SMatrix4} Translation matrix
      */
     static Translate(pos) {
-        return SMatrix4.Custom(1, 0, 0, pos.x, 0, 1, 0, pos.y, 0, 0, 1, pos.z, 0, 0, 0, 1);
+        return SMatrix4.Custom(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, pos.x, pos.y, pos.z, 1);
     }
     /**
      * Scales Matrix by Vector
