@@ -1232,7 +1232,14 @@ define("Matrix", ["require", "exports", "Vector"], function (require, exports, V
             return new Vector_js_1.Vector2(this.b, this.d);
         }
         /**
-       * Converts matrix to Array
+      * Converts matrix to Column Major Array
+      * @returns {Array<number>} Array
+      */
+        toColumnMajorArray() {
+            return [this.a, this.c, this.b, this.d];
+        }
+        /**
+       * Converts matrix to Row Major Array
        * @returns {Array<number>} Array
        */
         toArray() {
@@ -1308,6 +1315,10 @@ define("Matrix", ["require", "exports", "Vector"], function (require, exports, V
         //
         //Alliasses
         //
+        toWebGlArray = this.toColumnMajorArray;
+        /** @alias {@link toColumnMajorArray} */
+        toCMArr() { return this.toColumnMajorArray(); }
+        ;
         /** @alias {@link multiplyVec} */
         multVec(vector) { return this.multiplyVector(vector); }
         /** @alias {@link multiplyMatrix} */
@@ -1466,6 +1477,15 @@ define("Matrix", ["require", "exports", "Vector"], function (require, exports, V
             return new Vector_js_1.Vector3(this.c, this.f, this.i);
         }
         /**
+     * Converts matrix to Column Major Array
+     * @returns {Array<number>} Array
+     */
+        toColumnMajorArray() {
+            return [this.a, this.d, this.g,
+                this.b, this.e, this.h,
+                this.c, this.f, this.i];
+        }
+        /**
        * Converts matrix to Array
        * @returns {Array<number>} Array
        */
@@ -1594,6 +1614,10 @@ define("Matrix", ["require", "exports", "Vector"], function (require, exports, V
         //
         //Alliasses
         //
+        toWebGlArray = this.toColumnMajorArray;
+        /** @alias {@link toColumnMajorArray} */
+        toCMArr() { return this.toColumnMajorArray(); }
+        ;
         /** @alias {@link multiplyVec} */
         multVec(vector) { return this.multiplyVector(vector); }
         /** @alias {@link multiplyMatrix} */
@@ -1799,6 +1823,16 @@ define("Matrix", ["require", "exports", "Vector"], function (require, exports, V
             return new Vector_js_1.Vector4(this.d, this.h, this.l, this.p);
         }
         /**
+  * Converts matrix to Column Major Array
+  * @returns {Array<number>} Array
+  */
+        toColumnMajorArray() {
+            return [this.a, this.e, this.i, this.m,
+                this.b, this.f, this.j, this.n,
+                this.c, this.g, this.k, this.o,
+                this.d, this.h, this.l, this.p];
+        }
+        /**
        * Converts matrix to Array
        * @returns {Array<number>} Array
        */
@@ -1985,6 +2019,10 @@ define("Matrix", ["require", "exports", "Vector"], function (require, exports, V
         //
         //Alliasses
         //
+        toWebGlArray = this.toColumnMajorArray;
+        /** @alias {@link toColumnMajorArray} */
+        toCMArr() { return this.toColumnMajorArray(); }
+        ;
         /** @alias {@link multiplyVec} */
         multVec(vector) { return this.multiplyVector(vector); }
         /** @alias {@link multiplyMatrix} */
@@ -2032,7 +2070,7 @@ define("Matrix", ["require", "exports", "Vector"], function (require, exports, V
             let plane = (far / (far - near));
             let offset = -plane * near;
             let f = 1 / Math.tan(fov / 2);
-            return SMatrix4.Custom(f * aspect, 0, 0, 0, 0, f, 0, 0, 0, 0, plane, 1, 0, 0, offset, 0);
+            return SMatrix4.Custom(f * aspect, 0, 0, 0, 0, f, 0, 0, 0, 0, plane, offset, 0, 0, 1, 0);
         }
         /**
          * Changes the roll, or rotates in x
@@ -2084,7 +2122,7 @@ define("Matrix", ["require", "exports", "Vector"], function (require, exports, V
          * @returns {SMatrix4} Translation matrix
          */
         static Translate(pos) {
-            return SMatrix4.Custom(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, pos.x, pos.y, pos.z, 1);
+            return SMatrix4.Custom(1, 0, 0, pos.x, 0, 1, 0, pos.y, 0, 0, 1, pos.z, 0, 0, 0, 1);
         }
         /**
          * Scales Matrix by Vector

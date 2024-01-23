@@ -2,7 +2,7 @@
   "main": "./dist/commonjs/main.js",
   "types": "./dist/commonjs/main.d.ts",
   "name": "linear-algebra-library",
-  "version": "0.0.16",
+  "version": "0.0.161",
   "files": [
     "./dist/commonjs/*"
   ],

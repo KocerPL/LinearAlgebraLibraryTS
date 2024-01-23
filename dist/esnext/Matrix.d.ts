@@ -195,6 +195,7 @@ declare abstract class SMatrix {
     abstract multiplyMatrix(matrix: any): any;
     abstract multiply(matvec: any): any;
     abstract localMultiply(matrix: SMatrix): void;
+    abstract toColumnMajorArray(): Array<number>;
     abstract toArray(): Array<number>;
     abstract to2DArray(): Array<Array<number>>;
     abstract toVectorArray(): Array<any>;
@@ -250,7 +251,12 @@ export declare class SMatrix2 implements SMatrix {
     */
     getJVector(): Vector2;
     /**
-   * Converts matrix to Array
+  * Converts matrix to Column Major Array
+  * @returns {Array<number>} Array
+  */
+    toColumnMajorArray(): Array<number>;
+    /**
+   * Converts matrix to Row Major Array
    * @returns {Array<number>} Array
    */
     toArray(): Array<number>;
@@ -294,6 +300,9 @@ export declare class SMatrix2 implements SMatrix {
      * @param {SMatrix2} matrix Matrix to multiply by
      */
     localMultiply(matrix: SMatrix2): void;
+    toWebGlArray: () => Array<number>;
+    /** @alias {@link toColumnMajorArray} */
+    toCMArr(): Array<number>;
     /** @alias {@link multiplyVec} */
     multVec(vector: Vector2): Vector2;
     /** @alias {@link multiplyMatrix} */
@@ -357,6 +366,11 @@ export declare class SMatrix3 implements SMatrix {
    * @returns {Vector3} k vector in matrix
    */
     getKVector(): Vector3;
+    /**
+ * Converts matrix to Column Major Array
+ * @returns {Array<number>} Array
+ */
+    toColumnMajorArray(): Array<number>;
     /**
    * Converts matrix to Array
    * @returns {Array<number>} Array
@@ -422,6 +436,9 @@ export declare class SMatrix3 implements SMatrix {
     translate(pos: Vector2): SMatrix3;
     toString(): string;
     log(): void;
+    toWebGlArray: () => Array<number>;
+    /** @alias {@link toColumnMajorArray} */
+    toCMArr(): Array<number>;
     /** @alias {@link multiplyVec} */
     multVec(vector: Vector3): Vector3;
     /** @alias {@link multiplyMatrix} */
@@ -513,6 +530,11 @@ export declare class SMatrix4 implements SMatrix {
  */
     getLVector(): Vector4;
     /**
+* Converts matrix to Column Major Array
+* @returns {Array<number>} Array
+*/
+    toColumnMajorArray(): Array<number>;
+    /**
    * Converts matrix to Array
    * @returns {Array<number>} Array
    */
@@ -599,6 +621,9 @@ export declare class SMatrix4 implements SMatrix {
     toGeneric(): SquareMatrix;
     toString(): string;
     log(): void;
+    toWebGlArray: () => Array<number>;
+    /** @alias {@link toColumnMajorArray} */
+    toCMArr(): Array<number>;
     /** @alias {@link multiplyVec} */
     multVec(vector: Vector4): Vector4;
     /** @alias {@link multiplyMatrix} */
