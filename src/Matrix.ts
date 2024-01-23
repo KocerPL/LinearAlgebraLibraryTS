@@ -179,6 +179,7 @@ export class Matrix
     //
     //Alliasses
     //
+    
     /** @alias {@link multiplyVec} */
     multVec(vector:Vector):Vector {return this.multiplyVector(vector);}
     /** @alias {@link multiplyMatrix} */
@@ -417,6 +418,7 @@ export class SquareMatrix extends Matrix
 }
 abstract class SMatrix
 {
+    
     abstract get determinant():number;
     abstract transpose():SMatrix;
     abstract getMinor():SMatrix;
@@ -428,7 +430,7 @@ abstract class SMatrix
     abstract multiplyMatrix(matrix:any):any;
     abstract multiply(matvec:any):any;
     abstract localMultiply(matrix:SMatrix):void;
-
+    abstract toColumnMajorArray():Array<number>;
     abstract toArray():Array<number>;
     abstract to2DArray():Array<Array<number>>;
     abstract toVectorArray():Array<any>;
@@ -537,8 +539,16 @@ export class SMatrix2 implements SMatrix
      {
          return new Vector2(this.b,this.d);
      }
+       /**
+     * Converts matrix to Column Major Array
+     * @returns {Array<number>} Array 
+     */
+      toColumnMajorArray():Array<number>
+      {
+          return [this.a,this.c,this.b,this.d];
+        }
       /**
-     * Converts matrix to Array
+     * Converts matrix to Row Major Array
      * @returns {Array<number>} Array 
      */
      toArray():Array<number>
@@ -621,6 +631,9 @@ export class SMatrix2 implements SMatrix
      //
     //Alliasses
     //
+    toWebGlArray = this.toColumnMajorArray;
+    /** @alias {@link toColumnMajorArray} */
+     toCMArr():Array<number> {return this.toColumnMajorArray()};
     /** @alias {@link multiplyVec} */
     multVec(vector:Vector2):Vector2 {return this.multiplyVector(vector);}
     /** @alias {@link multiplyMatrix} */
@@ -791,6 +804,16 @@ export class SMatrix3 implements SMatrix
       {
           return new Vector3(this.c,this.f,this.i);
       }
+        /**
+     * Converts matrix to Column Major Array
+     * @returns {Array<number>} Array 
+     */
+        toColumnMajorArray():Array<number>
+        {
+            return [this.a,this.d,this.g,
+                this.b,this.e,this.h,
+                this.c,this.f,this.i];
+          }
       /**
      * Converts matrix to Array
      * @returns {Array<number>} Array 
@@ -943,6 +966,9 @@ export class SMatrix3 implements SMatrix
      //
     //Alliasses
     //
+    toWebGlArray = this.toColumnMajorArray;
+       /** @alias {@link toColumnMajorArray} */
+       toCMArr():Array<number> {return this.toColumnMajorArray()};
     /** @alias {@link multiplyVec} */
     multVec(vector:Vector3):Vector3 {return this.multiplyVector(vector);}
     /** @alias {@link multiplyMatrix} */
@@ -1189,6 +1215,17 @@ export class SMatrix4 implements SMatrix
         {
             return new Vector4(this.d,this.h,this.l,this.p);
         }
+           /**
+     * Converts matrix to Column Major Array
+     * @returns {Array<number>} Array 
+     */
+        toColumnMajorArray():Array<number>
+        {
+               return [this.a,this.e,this.i,this.m,
+                this.b,this.f,this.j,this.n,
+                this.c,this.g,this.k,this.o,
+                this.d,this.h,this.l,this.p]
+        }
       /**
      * Converts matrix to Array
      * @returns {Array<number>} Array 
@@ -1403,6 +1440,9 @@ export class SMatrix4 implements SMatrix
      //
     //Alliasses
     //
+    toWebGlArray = this.toColumnMajorArray;
+     /** @alias {@link toColumnMajorArray} */
+    toCMArr():Array<number> {return this.toColumnMajorArray()};
     /** @alias {@link multiplyVec} */
     multVec(vector:Vector4):Vector4 {return this.multiplyVector(vector);}
     /** @alias {@link multiplyMatrix} */
@@ -1460,8 +1500,8 @@ export class SMatrix4 implements SMatrix
     return SMatrix4.Custom(
         f*aspect,0,0,0,
         0,f,0,0,
-        0,0,plane,1,
-        0,0,offset,0
+        0,0,plane,offset,
+        0,0,1,0
     )
    }
    /**
@@ -1540,10 +1580,10 @@ export class SMatrix4 implements SMatrix
    static Translate(pos:Vector3|Vector4):SMatrix4
    {
     return SMatrix4.Custom(
-        1,0,0,0,
-        0,1,0,0,
-        0,0,1,0,
-        pos.x,pos.y,pos.z,1
+        1,0,0,pos.x,
+        0,1,0,pos.y,
+        0,0,1,pos.z,
+        0,0,0,1
     )
    }
    /**
